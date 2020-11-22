@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model List<Blog>
+
+@foreach (var item in Model)
+{
+    <div>
+        @Html.ActionLink("ID","ListBlogDetail",new { id = item.BlogId}) : @item.BlogId
+    </div>
+    <div>
+        Rating : @item.Rating
+    </div>
+    <div>
+        Url : @item.Url
+    </div>
+    <hr />
+}
