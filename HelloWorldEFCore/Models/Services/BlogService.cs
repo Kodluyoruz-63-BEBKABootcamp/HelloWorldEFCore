@@ -14,7 +14,7 @@ namespace HelloWorldEFCore.Models.Services
         {
             using (var db = new BloggingContext())
             {
-                bool ensure = db.Database.EnsureCreated();
+                //bool ensure = db.Database.EnsureCreated();
 
                 db.Blogs.Add(blog);
                 db.SaveChanges();
@@ -28,7 +28,7 @@ namespace HelloWorldEFCore.Models.Services
             List<Blog> list = new List<Blog>();
             using (var db = new BloggingContext())
             {
-                bool ensure = db.Database.EnsureCreated();
+                //bool ensure = db.Database.EnsureCreated();
 
                 list = db.Blogs.ToList();
             }

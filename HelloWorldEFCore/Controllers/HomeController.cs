@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using HelloWorldEFCore.Models.Services;
+using HelloWorldEFCore.Models;
 using HelloWorldEFCore.Models.DomainModels;
+using HelloWorldEFCore.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using HelloWorldEFCore.Models;
 
 namespace HelloWorldEFCore.Controllers
 {
@@ -64,6 +63,8 @@ namespace HelloWorldEFCore.Controllers
         public IActionResult ListBlogDetail(int id)
         {
             var list = postService.GetPosts(id);
+
+            //var list2 = postService.GetPosts(x => x.Title == "test");
 
             return View(list);
         }
