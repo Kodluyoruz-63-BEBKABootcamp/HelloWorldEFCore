@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HelloWorldEFCore.Models.DomainModels;
 
@@ -14,7 +15,7 @@ namespace HelloWorldEFCore.Models.Services
         {
             using (var db = new BloggingContext())
             {
-                bool ensure = db.Database.EnsureCreated();
+                //bool ensure = db.Database.EnsureCreated();
 
                 db.Posts.Add(post);
                 db.SaveChanges();
@@ -40,7 +41,7 @@ namespace HelloWorldEFCore.Models.Services
             List<Post> list = new List<Post>();
             using (var db = new BloggingContext())
             {
-                bool ensure = db.Database.EnsureCreated();
+                //bool ensure = db.Database.EnsureCreated();
 
                 list = db.Posts.ToList();
             }
@@ -53,9 +54,22 @@ namespace HelloWorldEFCore.Models.Services
             List<Post> list = new List<Post>();
             using (var db = new BloggingContext())
             {
-                bool ensure = db.Database.EnsureCreated();
+                //bool ensure = db.Database.EnsureCreated();
 
                 list = db.Posts.Where(p => p.BlogId == blogId).ToList();
+            }
+
+            return list;
+        }
+
+        public IQueryable<Post> GetPosts(Func<Post,bool> func)
+        {
+            IQueryable<Post> list;
+            using (var db = new BloggingContext())
+            {
+                //bool ensure = db.Database.EnsureCreated();
+
+                list = (IQueryable<Post>)db.Posts.Where(func);
             }
 
             return list;
