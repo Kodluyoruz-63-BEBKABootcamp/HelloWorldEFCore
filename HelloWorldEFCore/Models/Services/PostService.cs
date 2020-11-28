@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HelloWorldEFCore.Models.DomainModels;
 
 namespace HelloWorldEFCore.Models.Services
@@ -32,6 +33,32 @@ namespace HelloWorldEFCore.Models.Services
             }
 
             return returnList;
+        }
+
+        public List<Post> GetAllPosts()
+        {
+            List<Post> list = new List<Post>();
+            using (var db = new BloggingContext())
+            {
+                bool ensure = db.Database.EnsureCreated();
+
+                list = db.Posts.ToList();
+            }
+
+            return list;
+        }
+
+        public List<Post> GetPosts(int blogId)
+        {
+            List<Post> list = new List<Post>();
+            using (var db = new BloggingContext())
+            {
+                bool ensure = db.Database.EnsureCreated();
+
+                list = db.Posts.Where(p => p.BlogId == blogId).ToList();
+            }
+
+            return list;
         }
     }
 }

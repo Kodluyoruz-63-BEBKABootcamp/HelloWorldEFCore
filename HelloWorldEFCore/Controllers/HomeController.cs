@@ -14,6 +14,9 @@ namespace HelloWorldEFCore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        BlogService blogService = new BlogService();
+        PostService postService = new PostService();
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -27,9 +30,6 @@ namespace HelloWorldEFCore.Controllers
             context.Posts.Add(new Models.DomainModels.Post() { PostId = 1, Title = "Test", Content = "First Blog Post" });
             context.SaveChanges();
             */
-
-            BlogService blogService = new BlogService();
-            PostService postService = new PostService();
 
             Blog blog = new Blog() { Url = "blogs.com/" + Guid.NewGuid(), Rating = 5 };
             int id = blogService.CreateBlog(blog);
@@ -49,40 +49,21 @@ namespace HelloWorldEFCore.Controllers
 
         public IActionResult ListBlog()
         {
-            List<Blog> list = new List<Blog>();
-            using (var db = new BloggingContext())
-            {
-                bool ensure = db.Database.EnsureCreated();
-
-                list = db.Blogs.ToList();
-            }
+            var list = blogService.GetAllBlogs();
 
             return View(list);
         }
 
         public IActionResult ListPost()
         {
-            List<Post> list = new List<Post>();
-            using (var db = new BloggingContext())
-            {
-                bool ensure = db.Database.EnsureCreated();
-
-                list = db.Posts.ToList();
-            }
+            var list = postService.GetAllPosts();
 
             return View(list);
         }
 
         public IActionResult ListBlogDetail(int id)
         {
-            List<Post> list = new List<Post>();
-            using (var db = new BloggingContext())
-            {
-                bool ensure = db.Database.EnsureCreated();
-
-                list = db.Posts.Where(p => p.BlogId == id).ToList();
-            }
-
+            var list = postService.GetPosts(id);
 
             return View(list);
         }
