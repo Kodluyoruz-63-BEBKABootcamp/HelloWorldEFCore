@@ -12,13 +12,15 @@ namespace HelloWorldEFCore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IBlogService _blogService;
 
-        BlogService blogService = new BlogService();
+        //BlogService blogService = new BlogService();
         PostService postService = new PostService();
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBlogService blogService)
         {
             _logger = logger;
+            _blogService = blogService;
         }
 
         [HttpGet]
@@ -31,7 +33,7 @@ namespace HelloWorldEFCore.Controllers
             */
 
             Blog blog = new Blog() { Url = "blogs.com/" + Guid.NewGuid(), Rating = 5 };
-            int id = blogService.CreateBlog(blog);
+            int id = _blogService.CreateBlog(blog);
 
 
             Random rnd = new Random();
@@ -48,7 +50,7 @@ namespace HelloWorldEFCore.Controllers
 
         public IActionResult ListBlog()
         {
-            var list = blogService.GetAllBlogs();
+            var list = _blogService.GetAllBlogs();
 
             return View(list);
         }

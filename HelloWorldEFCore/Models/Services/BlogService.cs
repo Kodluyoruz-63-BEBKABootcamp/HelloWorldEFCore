@@ -4,7 +4,7 @@ using HelloWorldEFCore.Models.DomainModels;
 
 namespace HelloWorldEFCore.Models.Services
 {
-    public class BlogService
+    public class BlogService : IBlogService
     {
         public BlogService()
         {
